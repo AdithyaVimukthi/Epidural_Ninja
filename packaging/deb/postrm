@@ -1,0 +1,10 @@
+#!/bin/sh
+# openarm-control postrm: dpkg has removed the package's files; remove what
+# postinst made (the venv, the bytecode). Users' ~/OpenArm is never touched.
+set -e
+case "$1" in
+    remove|purge)
+        rm -rf /opt/openarm-control
+        ;;
+esac
+exit 0

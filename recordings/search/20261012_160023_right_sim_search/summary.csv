@@ -1,0 +1,3 @@
+attempt,tilt_deg,rot_deg,outcome,detail,out_confirmed,contact_mm,hit_mm,reached_mm,max_force,start_x,start_y,start_z,end_x,end_y,end_z,log
+1,0,0,map_stop,"",1,10.509,,26.315,656898.500,0.20000,-0.09500,0.26000,0.20000,-0.09500,0.20000,attempt_01.csv
+2,15,0,depth,"",0,15.521,,65.020,1907875.000,0.19598,-0.09500,0.26449,0.21281,-0.09500,0.20169,attempt_02.csv

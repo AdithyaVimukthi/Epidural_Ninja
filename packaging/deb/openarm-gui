@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# OpenArm Control -- the GUI. Installed by the openarm-control .deb as /usr/bin/openarm-gui.
+# The app under /opt is read-only: settings (user_config.yaml) and recordings go
+# to $OPENARM_DATA_DIR, ~/OpenArm unless set.
+APP=/opt/openarm-control
+unset PYTHONPATH            # e.g. ROS 2's -- the app has its own environment
+export OPENARM_DATA_DIR="${OPENARM_DATA_DIR:-$HOME/OpenArm}"
+if [ ! -x "$APP/venv/bin/python" ]; then
+    echo "OpenArm Control's Python environment is missing -- run: sudo dpkg-reconfigure openarm-control" >&2
+    exit 1
+fi
+mkdir -p "$OPENARM_DATA_DIR"
+cd "$OPENARM_DATA_DIR" || exit 1
+if [ -t 1 ]; then
+    exec "$APP/venv/bin/python" "$APP/src/gui_main.py" "$@"
+fi
+# Started from the app menu: no terminal, so keep the output in a log.
+LOG="${XDG_STATE_HOME:-$HOME/.local/state}/openarm-control/gui.log"
+mkdir -p "$(dirname "$LOG")"
+echo "=== $(date -Is) ===" >> "$LOG"
+exec "$APP/venv/bin/python" "$APP/src/gui_main.py" "$@" >> "$LOG" 2>&1

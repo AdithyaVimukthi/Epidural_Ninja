@@ -1,0 +1,14 @@
+# Fallback when requirements.txt's exact versions aren't available for this
+# Python: the same libraries, any compatible version.
+numpy>=1.26
+scipy>=1.11
+matplotlib>=3.8
+PySide6>=6.6
+roboticstoolbox-python>=1.1
+spatialmath-python>=1.1
+pin>=3.0
+coppeliasim-zmqremoteapi-client>=2.0
+pyzmq>=25
+PyYAML>=6
+pyserial>=3.5
+pytest>=7

@@ -1,0 +1,686 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="world_visual">
+    <!-- Made by src/tools/make_needle_urdf.py from openarm_dual.urdf: right gripper replaced by the needle tool. needle 0 mm below the syringe nozzle; tool mass 107.5 g (estimated from the CAD and materials). Regenerate rather than edit. -->
+    <link name="robot_base">
+        <visual name="world_visual">
+            <origin rpy="-3.141593 3.141593 -3.141593" xyz="0.030000 -0.000000 0.000250" />
+            <geometry>
+                <box size="0.000500 0.000500 0.000500" />
+            </geometry>
+            <material name="robot_base_material">
+                <color rgba="1.000000 1.000000 1.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_body_world_joint" type="fixed">
+        <axis xyz="0 0 1" />
+        <parent link="robot_base" />
+        <child link="openarm_body_link0_respondable" />
+        <origin rpy="-0.000000 1.570796 0.000000" xyz="0.030000 -0.000000 0.000250" />
+    </joint>
+    <link name="openarm_body_link0_respondable">
+        <inertial>
+            <origin rpy="-0.000000 -1.570796 0.000000" xyz="0.000000 0.000000 0.000000" />
+            <inertia izz="0.051" iyz="0.0" iyy="1.653" ixz="0.0" ixy="0.0" ixx="1.653" />
+            <mass value="13.89" />
+        </inertial>
+        <collision name="openarm_body_link0_respondable">
+            <origin rpy="-0.000000 -1.570796 0.000000" xyz="0.000000 0.000000 0.000000" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_body_link0_respondable_coll_1.dae" />
+            </geometry>
+        </collision>
+        <visual name="openarm_body_link0_visual">
+            <origin rpy="-0.000000 -1.570796 0.000000" xyz="0.000000 0.000000 0.000000" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_body_link0_visual_vis_1.dae" />
+            </geometry>
+            <material name="openarm_body_link0_visual_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_left_openarm_body_link0_joint" type="fixed">
+        <axis xyz="0 0 1" />
+        <parent link="openarm_body_link0_respondable" />
+        <child link="openarm_left_link0_respondable" />
+        <origin rpy="3.141593 3.141593 1.570793" xyz="-0.698000 0.031000 0.000000" />
+    </joint>
+    <link name="openarm_left_link0_respondable">
+        <inertial>
+            <origin rpy="-0.000000 -1.570796 0.000000" xyz="-0.030769 -0.000158 -0.000948" />
+            <inertia izz="0.00147" iyz="-7e-06" iyy="0.000962" ixz="-3.3e-05" ixy="-4e-06" ixx="0.001128" />
+            <mass value="1.143228494324" />
+        </inertial>
+        <collision name="openarm_left_link0_respondable">
+            <origin rpy="-0.000000 -1.570796 0.000000" xyz="0.000000 0.000000 0.000000" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_link0_respondable_coll_1.dae" />
+            </geometry>
+        </collision>
+        <visual name="openarm_left_link0_visual">
+            <origin rpy="-0.000000 -1.570796 0.000000" xyz="0.000000 0.000000 0.000000" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_link0_visual_vis_1.dae" />
+            </geometry>
+            <material name="openarm_left_link0_visual_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_left_joint1" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit upper="1.396263" velocity="16.754666" lower="-3.490659" effort="40.0" />
+        <parent link="openarm_left_link0_respondable" />
+        <child link="openarm_left_link1_respondable" />
+        <origin rpy="-0.000000 -1.570796 0.000000" xyz="-0.062500 0.000000 -0.000000" />
+    </joint>
+    <link name="openarm_left_link1_respondable">
+        <inertial>
+            <origin rpy="3.141593 3.141593 -3.141593" xyz="0.001147 -0.000033 0.053953" />
+            <inertia izz="0.001016" iyz="1e-06" iyy="0.001273" ixz="-2.9e-05" ixy="-1e-06" ixx="0.001567" />
+            <mass value="1.1416684646202" />
+        </inertial>
+        <collision name="openarm_left_link1_respondable">
+            <origin rpy="3.141593 3.141593 -3.141593" xyz="0.000000 -0.000000 -0.062500" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_link1_respondable_coll_1.dae" />
+            </geometry>
+        </collision>
+        <visual name="openarm_left_link1_visual">
+            <origin rpy="3.141593 3.141593 -3.141593" xyz="0.000000 -0.000000 -0.062500" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_link1_visual_vis_1.dae" />
+            </geometry>
+            <material name="openarm_left_link1_visual_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_left_joint2" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit upper="0.1745326732051" velocity="16.754666" lower="-3.3161253267949" effort="40.0" />
+        <parent link="openarm_left_link1_respondable" />
+        <child link="openarm_left_link2_respondable" />
+        <origin rpy="1.570796 3.141593 -1.570796" xyz="-0.030100 0.000000 0.060000" />
+    </joint>
+    <link name="openarm_left_link2_respondable">
+        <inertial>
+            <origin rpy="-0.000000 1.570796 0.000000" xyz="0.032566 0.000000 -0.008396" />
+            <inertia izz="0.000232" iyz="1e-06" iyy="0.000376" ixz="-0.000109" ixy="1e-06" ixx="0.000359" />
+            <mass value="0.27750927460116" />
+        </inertial>
+        <collision name="openarm_left_link2_respondable">
+            <origin rpy="-0.000000 1.570796 0.000000" xyz="-0.122500 -0.000000 -0.030100" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_link2_respondable_coll_1.dae" />
+            </geometry>
+        </collision>
+        <visual name="openarm_left_link2_visual">
+            <origin rpy="-0.000000 1.570796 0.000000" xyz="-0.122500 -0.000000 -0.030100" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_link2_visual_vis_1.dae" />
+            </geometry>
+            <material name="openarm_left_link2_visual_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_left_joint3" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit upper="1.570796" velocity="5.445426" lower="-1.570796" effort="27.0" />
+        <parent link="openarm_left_link2_respondable" />
+        <child link="openarm_left_link3_respondable" />
+        <origin rpy="-0.000000 1.570796 0.000000" xyz="0.066250 -0.000000 -0.030100" />
+    </joint>
+    <link name="openarm_left_link3_respondable">
+        <inertial>
+            <origin rpy="-3.141593 3.141593 -3.141593" xyz="-0.002105 -0.000555 0.090475" />
+            <inertia izz="0.000661" iyz="-3.6e-05" iyy="0.004319" ixz="1.1e-05" ixy="1e-06" ixx="0.004372" />
+            <mass value="1.0738633382023" />
+        </inertial>
+        <collision name="openarm_left_link3_respondable">
+            <origin rpy="-3.141593 3.141593 -3.141593" xyz="0.000000 -0.000000 -0.188750" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_link3_respondable_coll_1.dae" />
+            </geometry>
+        </collision>
+        <visual name="openarm_left_link3_visual">
+            <origin rpy="-3.141593 3.141593 -3.141593" xyz="0.000000 -0.000000 -0.188750" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_link3_visual_vis_1.dae" />
+            </geometry>
+            <material name="openarm_left_link3_visual_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_left_joint4" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit upper="2.443461" velocity="5.445426" lower="0.0" effort="27.0" />
+        <parent link="openarm_left_link3_respondable" />
+        <child link="openarm_left_link4_respondable" />
+        <origin rpy="1.570796 3.141593 -3.141593" xyz="0.000000 0.031500 0.153750" />
+    </joint>
+    <link name="openarm_left_link4_respondable">
+        <inertial>
+            <origin rpy="-1.570796 3.141593 3.141593" xyz="-0.002901 -0.063396 -0.030306" />
+            <inertia izz="0.000334" iyz="3.8e-05" iyy="0.000511" ixz="-1.9e-05" ixy="-1e-06" ixx="0.000623" />
+            <mass value="0.63485345668334" />
+        </inertial>
+        <collision name="openarm_left_link4_respondable">
+            <origin rpy="-1.570796 3.141593 3.141593" xyz="-0.000000 0.342500 -0.031500" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_link4_respondable_coll_1.dae" />
+            </geometry>
+        </collision>
+        <visual name="openarm_left_link4_visual">
+            <origin rpy="-1.570796 3.141593 3.141593" xyz="-0.000000 0.342500 -0.031500" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_link4_visual_vis_1.dae" />
+            </geometry>
+            <material name="openarm_left_link4_visual_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_left_joint5" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit upper="1.570796" velocity="20.943946" lower="-1.570796" effort="7.0" />
+        <parent link="openarm_left_link4_respondable" />
+        <child link="openarm_left_link5_respondable" />
+        <origin rpy="-1.570796 3.141593 3.141593" xyz="-0.000000 -0.095500 -0.031500" />
+    </joint>
+    <link name="openarm_left_link5_respondable">
+        <inertial>
+            <origin rpy="-3.141593 3.141593 3.141593" xyz="-0.003050 -0.000887 0.043080" />
+            <inertia izz="0.000324" iyz="-6e-06" iyy="0.000445" ixz="6e-06" ixy="-8e-06" ixx="0.000423" />
+            <mass value="0.61565880261685" />
+        </inertial>
+        <collision name="openarm_left_link5_respondable">
+            <origin rpy="-3.141593 3.141593 3.141593" xyz="0.000000 0.000000 -0.438000" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_link5_respondable_coll_1.dae" />
+            </geometry>
+        </collision>
+        <visual name="openarm_left_link5_visual">
+            <origin rpy="-3.141593 3.141593 3.141593" xyz="0.000000 0.000000 -0.438000" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_link5_visual_vis_1.dae" />
+            </geometry>
+            <material name="openarm_left_link5_visual_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_left_joint6" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit upper="0.785398" velocity="20.943946" lower="-0.785398" effort="7.0" />
+        <parent link="openarm_left_link5_respondable" />
+        <child link="openarm_left_link6_respondable" />
+        <origin rpy="-0.000000 1.570796 0.000000" xyz="0.037500 0.000000 0.120500" />
+    </joint>
+    <link name="openarm_left_link6_respondable">
+        <inertial>
+            <origin rpy="-0.000000 -1.570796 0.000000" xyz="0.000095 -0.000332 -0.037137" />
+            <inertia izz="0.000159" iyz="1e-06" iyy="0.000157" ixz="1e-06" ixy="1e-06" ixx="0.000143" />
+            <mass value="0.47520277318799" />
+        </inertial>
+        <collision name="openarm_left_link6_respondable">
+            <origin rpy="-0.000000 -1.570796 0.000000" xyz="0.558500 -0.000000 -0.037500" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_link6_respondable_coll_1.dae" />
+            </geometry>
+        </collision>
+        <visual name="openarm_left_link6_visual">
+            <origin rpy="-0.000000 -1.570796 0.000000" xyz="0.558500 -0.000000 -0.037500" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_link6_visual_vis_1.dae" />
+            </geometry>
+            <material name="openarm_left_link6_visual_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_left_joint7" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit upper="1.570796" velocity="20.943946" lower="-1.570796" effort="7.0" />
+        <parent link="openarm_left_link6_respondable" />
+        <child link="openarm_left_link7_respondable" />
+        <origin rpy="1.570796 -1.570796 0.000000" xyz="0.000000 0.000000 -0.037500" />
+    </joint>
+    <link name="openarm_left_link7_respondable">
+        <inertial>
+            <origin rpy="1.570796 3.141593 3.141593" xyz="0.000069 0.069519 0.012662" />
+            <inertia izz="0.000342" iyz="8.9e-05" iyy="0.000497" ixz="1e-06" ixy="1e-06" ixx="0.000639" />
+            <mass value="0.46597713273806" />
+        </inertial>
+        <collision name="openarm_left_link7_respondable">
+            <origin rpy="1.570796 3.141593 3.141593" xyz="-0.000000 -0.558500 -0.000000" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_link7_respondable_coll_1.dae" />
+            </geometry>
+        </collision>
+        <visual name="openarm_left_link7_visual">
+            <origin rpy="1.570796 3.141593 3.141593" xyz="-0.000000 -0.558500 -0.000000" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_link7_visual_vis_1.dae" />
+            </geometry>
+            <material name="openarm_left_link7_visual_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="left_openarm_hand_joint" type="fixed">
+        <axis xyz="0 0 1" />
+        <parent link="openarm_left_link7_respondable" />
+        <child link="openarm_left_hand_respondable" />
+        <origin rpy="1.570796 3.141593 1.570796" xyz="0.000000 0.100100 0.000000" />
+    </joint>
+    <link name="openarm_left_hand_respondable">
+        <inertial>
+            <origin rpy="-0.000000 -1.570796 0.000000" xyz="-0.030000 0.002000 -0.000000" />
+            <inertia izz="0.0002521" iyz="1e-06" iyy="1.763e-05" ixz="1e-06" ixy="1e-06" ixx="0.0002473" />
+            <mass value="0.35" />
+        </inertial>
+        <collision name="openarm_left_hand_respondable">
+            <origin rpy="-0.000000 -1.570796 0.000000" xyz="0.658500 -0.000000 0.000000" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_hand_respondable_coll_1.dae" />
+            </geometry>
+        </collision>
+        <visual name="openarm_left_hand_visual">
+            <origin rpy="-0.000000 -1.570796 0.000000" xyz="0.658500 -0.000000 0.000000" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_hand_visual_vis_1.dae" />
+            </geometry>
+            <material name="openarm_left_hand_visual_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_left_hand_tcp_joint" type="fixed">
+        <axis xyz="0 0 1" />
+        <parent link="openarm_left_hand_respondable" />
+        <child link="openarm_left_hand_tcp_visual" />
+        <origin rpy="3.141593 3.141593 -3.141593" xyz="-0.080000 -0.000000 -0.000000" />
+    </joint>
+    <link name="openarm_left_hand_tcp_visual">
+        <visual name="openarm_left_hand_tcp_visual">
+            <origin rpy="-0.000000 -1.570796 0.000000" xyz="0.000000 0.000000 -0.000000" />
+            <geometry>
+                <box size="0.000500 0.000500 0.000500" />
+            </geometry>
+            <material name="openarm_left_hand_tcp_visual_material">
+                <color rgba="1.000000 1.000000 1.000000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_left_finger_joint1" type="prismatic">
+        <axis xyz="0 0 1" />
+        <limit upper="0.044" velocity="10.0" lower="0.0" effort="333.0" />
+        <parent link="openarm_left_hand_respondable" />
+        <child link="openarm_left_right_finger_respondable" />
+        <origin rpy="1.570796 -1.570796 0.000000" xyz="-0.015000 -0.006000 -0.000000" />
+    </joint>
+    <link name="openarm_left_right_finger_respondable">
+        <inertial>
+            <origin rpy="1.570796 3.141593 3.141593" xyz="0.006453 0.021968 0.017020" />
+            <inertia izz="7.5e-07" iyz="1e-06" iyy="2.375e-06" ixz="1e-06" ixy="1e-06" ixx="2.375e-06" />
+            <mass value="0.036025453432771" />
+        </inertial>
+        <collision name="openarm_left_right_finger_respondable">
+            <origin rpy="1.570796 3.141593 3.141593" xyz="-0.000000 -0.673001 -0.050000" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_right_finger_respondable_coll_1.dae" />
+            </geometry>
+        </collision>
+        <visual name="openarm_left_right_finger_visual">
+            <origin rpy="1.570796 3.141593 3.141593" xyz="-0.000000 -0.673001 -0.050000" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_right_finger_visual_vis_1.dae" />
+            </geometry>
+            <material name="openarm_left_right_finger_visual_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_left_finger_joint2" type="prismatic">
+        <axis xyz="0 0 1" />
+        <limit upper="0.044" velocity="10.0" lower="0.0" effort="333.0" />
+        <parent link="openarm_left_hand_respondable" />
+        <child link="openarm_left_left_finger_respondable" />
+        <origin rpy="-1.570796 -1.570796 0.000000" xyz="-0.015000 0.006000 -0.000000" />
+    </joint>
+    <link name="openarm_left_left_finger_respondable">
+        <inertial>
+            <origin rpy="-1.570796 3.141593 3.141593" xyz="0.006453 -0.021968 0.017020" />
+            <inertia izz="7.5e-07" iyz="1e-06" iyy="2.375e-06" ixz="1e-06" ixy="1e-06" ixx="2.375e-06" />
+            <mass value="0.036025453432771" />
+        </inertial>
+        <collision name="openarm_left_left_finger_respondable">
+            <origin rpy="-1.570796 3.141593 3.141593" xyz="0.000000 0.673001 -0.050000" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_left_finger_respondable_coll_1.dae" />
+            </geometry>
+        </collision>
+        <visual name="openarm_left_left_finger_visual">
+            <origin rpy="-1.570796 3.141593 3.141593" xyz="0.000000 0.673001 -0.050000" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_left_left_finger_visual_vis_1.dae" />
+            </geometry>
+            <material name="openarm_left_left_finger_visual_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_right_openarm_body_link0_joint" type="fixed">
+        <axis xyz="0 0 1" />
+        <parent link="openarm_body_link0_respondable" />
+        <child link="openarm_right_link0_respondable" />
+        <origin rpy="-3.141593 3.141593 -1.570793" xyz="-0.698000 -0.031000 0.000000" />
+    </joint>
+    <link name="openarm_right_link0_respondable">
+        <inertial>
+            <origin rpy="-0.000000 -1.570796 0.000000" xyz="-0.030769 0.000158 -0.000948" />
+            <inertia izz="0.00147" iyz="-7e-06" iyy="0.000962" ixz="-3.3e-05" ixy="-4e-06" ixx="0.001128" />
+            <mass value="1.143228494324" />
+        </inertial>
+        <collision name="openarm_right_link0_respondable">
+            <origin rpy="-0.000000 -1.570796 0.000000" xyz="0.000000 0.000000 0.000000" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_right_link0_respondable_coll_1.dae" />
+            </geometry>
+        </collision>
+        <visual name="openarm_right_link0_visual">
+            <origin rpy="-0.000000 -1.570796 0.000000" xyz="0.000000 0.000000 0.000000" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_right_link0_visual_vis_1.dae" />
+            </geometry>
+            <material name="openarm_right_link0_visual_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_right_joint1" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit upper="3.490659" velocity="16.754666" lower="-1.396263" effort="40.0" />
+        <parent link="openarm_right_link0_respondable" />
+        <child link="openarm_right_link1_respondable" />
+        <origin rpy="-0.000000 -1.570796 0.000000" xyz="-0.062500 -0.000000 0.000000" />
+    </joint>
+    <link name="openarm_right_link1_respondable">
+        <inertial>
+            <origin rpy="-3.141593 3.141593 -3.141593" xyz="0.001147 0.000033 0.053953" />
+            <inertia izz="0.001016" iyz="1e-06" iyy="0.001273" ixz="-2.9e-05" ixy="-1e-06" ixx="0.001567" />
+            <mass value="1.1416684646202" />
+        </inertial>
+        <collision name="openarm_right_link1_respondable">
+            <origin rpy="-3.141593 3.141593 -3.141593" xyz="0.000000 0.000000 -0.062500" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_right_link1_respondable_coll_1.dae" />
+            </geometry>
+        </collision>
+        <visual name="openarm_right_link1_visual">
+            <origin rpy="-3.141593 3.141593 -3.141593" xyz="0.000000 0.000000 -0.062500" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_right_link1_visual_vis_1.dae" />
+            </geometry>
+            <material name="openarm_right_link1_visual_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_right_joint2" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit upper="3.3161253267949" velocity="16.754666" lower="-0.1745326732051" effort="40.0" />
+        <parent link="openarm_right_link1_respondable" />
+        <child link="openarm_right_link2_respondable" />
+        <origin rpy="-1.570796 3.141593 1.570796" xyz="-0.030100 0.000000 0.060000" />
+    </joint>
+    <link name="openarm_right_link2_respondable">
+        <inertial>
+            <origin rpy="0.000000 1.570796 0.000000" xyz="0.032566 -0.000000 -0.008396" />
+            <inertia izz="0.000232" iyz="1e-06" iyy="0.000376" ixz="-0.000109" ixy="1e-06" ixx="0.000359" />
+            <mass value="0.27750927460116" />
+        </inertial>
+        <collision name="openarm_right_link2_respondable">
+            <origin rpy="0.000000 1.570796 0.000000" xyz="-0.122500 0.000000 -0.030100" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_right_link2_respondable_coll_1.dae" />
+            </geometry>
+        </collision>
+        <visual name="openarm_right_link2_visual">
+            <origin rpy="0.000000 1.570796 0.000000" xyz="-0.122500 0.000000 -0.030100" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_right_link2_visual_vis_1.dae" />
+            </geometry>
+            <material name="openarm_right_link2_visual_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_right_joint3" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit upper="1.570796" velocity="5.445426" lower="-1.570796" effort="27.0" />
+        <parent link="openarm_right_link2_respondable" />
+        <child link="openarm_right_link3_respondable" />
+        <origin rpy="0.000000 1.570796 0.000000" xyz="0.066250 0.000000 -0.030100" />
+    </joint>
+    <link name="openarm_right_link3_respondable">
+        <inertial>
+            <origin rpy="3.141593 3.141593 3.141593" xyz="-0.002105 0.000555 0.090475" />
+            <inertia izz="0.000661" iyz="-3.6e-05" iyy="0.004319" ixz="1.1e-05" ixy="1e-06" ixx="0.004372" />
+            <mass value="1.0738633382023" />
+        </inertial>
+        <collision name="openarm_right_link3_respondable">
+            <origin rpy="3.141593 3.141593 3.141593" xyz="0.000000 0.000000 -0.188750" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_right_link3_respondable_coll_1.dae" />
+            </geometry>
+        </collision>
+        <visual name="openarm_right_link3_visual">
+            <origin rpy="3.141593 3.141593 3.141593" xyz="0.000000 0.000000 -0.188750" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_right_link3_visual_vis_1.dae" />
+            </geometry>
+            <material name="openarm_right_link3_visual_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_right_joint4" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit upper="2.443461" velocity="5.445426" lower="0.0" effort="27.0" />
+        <parent link="openarm_right_link3_respondable" />
+        <child link="openarm_right_link4_respondable" />
+        <origin rpy="1.570796 3.141593 -3.141593" xyz="0.000000 0.031500 0.153750" />
+    </joint>
+    <link name="openarm_right_link4_respondable">
+        <inertial>
+            <origin rpy="-1.570796 3.141593 3.141593" xyz="-0.002901 -0.063396 -0.030306" />
+            <inertia izz="0.000334" iyz="3.8e-05" iyy="0.000511" ixz="-1.9e-05" ixy="-1e-06" ixx="0.000623" />
+            <mass value="0.63485345668334" />
+        </inertial>
+        <collision name="openarm_right_link4_respondable">
+            <origin rpy="-1.570796 3.141593 3.141593" xyz="-0.000000 0.342500 -0.031500" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_right_link4_respondable_coll_1.dae" />
+            </geometry>
+        </collision>
+        <visual name="openarm_right_link4_visual">
+            <origin rpy="-1.570796 3.141593 3.141593" xyz="-0.000000 0.342500 -0.031500" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_right_link4_visual_vis_1.dae" />
+            </geometry>
+            <material name="openarm_right_link4_visual_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_right_joint5" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit upper="1.570796" velocity="20.943946" lower="-1.570796" effort="7.0" />
+        <parent link="openarm_right_link4_respondable" />
+        <child link="openarm_right_link5_respondable" />
+        <origin rpy="-1.570796 3.141593 3.141593" xyz="-0.000000 -0.095500 -0.031500" />
+    </joint>
+    <link name="openarm_right_link5_respondable">
+        <inertial>
+            <origin rpy="-3.141593 3.141593 3.141593" xyz="-0.003050 0.000887 0.043080" />
+            <inertia izz="0.000324" iyz="-6e-06" iyy="0.000445" ixz="6e-06" ixy="-8e-06" ixx="0.000423" />
+            <mass value="0.61565880261685" />
+        </inertial>
+        <collision name="openarm_right_link5_respondable">
+            <origin rpy="-3.141593 3.141593 3.141593" xyz="0.000000 -0.000000 -0.438000" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_right_link5_respondable_coll_1.dae" />
+            </geometry>
+        </collision>
+        <visual name="openarm_right_link5_visual">
+            <origin rpy="-3.141593 3.141593 3.141593" xyz="0.000000 -0.000000 -0.438000" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_right_link5_visual_vis_1.dae" />
+            </geometry>
+            <material name="openarm_right_link5_visual_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_right_joint6" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit upper="0.785398" velocity="20.943946" lower="-0.785398" effort="7.0" />
+        <parent link="openarm_right_link5_respondable" />
+        <child link="openarm_right_link6_respondable" />
+        <origin rpy="0.000000 1.570796 0.000000" xyz="0.037500 -0.000000 0.120500" />
+    </joint>
+    <link name="openarm_right_link6_respondable">
+        <inertial>
+            <origin rpy="-0.000000 -1.570796 0.000000" xyz="0.000095 0.000332 -0.037137" />
+            <inertia izz="0.000159" iyz="1e-06" iyy="0.000157" ixz="1e-06" ixy="1e-06" ixx="0.000143" />
+            <mass value="0.47520277318799" />
+        </inertial>
+        <collision name="openarm_right_link6_respondable">
+            <origin rpy="-0.000000 -1.570796 0.000000" xyz="0.558500 -0.000000 -0.037500" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_right_link6_respondable_coll_1.dae" />
+            </geometry>
+        </collision>
+        <visual name="openarm_right_link6_visual">
+            <origin rpy="-0.000000 -1.570796 0.000000" xyz="0.558500 -0.000000 -0.037500" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_right_link6_visual_vis_1.dae" />
+            </geometry>
+            <material name="openarm_right_link6_visual_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_right_joint7" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit upper="1.570796" velocity="20.943946" lower="-1.570796" effort="7.0" />
+        <parent link="openarm_right_link6_respondable" />
+        <child link="openarm_right_link7_respondable" />
+        <origin rpy="-1.570796 -1.570796 0.000000" xyz="0.000000 0.000000 -0.037500" />
+    </joint>
+    <link name="openarm_right_link7_respondable">
+        <inertial>
+            <origin rpy="-1.570796 3.141593 3.141593" xyz="0.000069 -0.069519 0.012662" />
+            <inertia izz="0.000342" iyz="8.9e-05" iyy="0.000497" ixz="1e-06" ixy="1e-06" ixx="0.000639" />
+            <mass value="0.46597713273806" />
+        </inertial>
+        <collision name="openarm_right_link7_respondable">
+            <origin rpy="-1.570796 3.141593 3.141593" xyz="0.000000 0.558500 0.000000" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_right_link7_respondable_coll_1.dae" />
+            </geometry>
+        </collision>
+        <visual name="openarm_right_link7_visual">
+            <origin rpy="-1.570796 3.141593 3.141593" xyz="0.000000 0.558500 0.000000" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v2/sim_files/udrf/openarm_dual_openarm_right_link7_visual_vis_1.dae" />
+            </geometry>
+            <material name="openarm_right_link7_visual_material">
+                <color rgba="0.900000 0.900000 0.900000 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="right_openarm_needle_tool_joint" type="fixed">
+        <axis xyz="0 0 1" />
+        <parent link="openarm_right_link7_respondable" />
+        <child link="openarm_right_needle_tool" />
+        <origin rpy="-1.570796 3.141593 -1.570796" xyz="-0.000000 -0.100100 0.000000" />
+    </joint>
+    <link name="openarm_right_needle_tool">
+        <inertial>
+            <origin rpy="0 0 0" xyz="-0.005229 -0.034647 -0.000311" />
+            <mass value="0.107527" />
+            <inertia ixx="2.4333e-04" ixy="-4.1638e-05" ixz="-2.8065e-07" iyy="5.2242e-05" iyz="-1.0269e-07" izz="2.6493e-04" />
+        </inertial>
+        <collision name="openarm_right_needle_tool_collision">
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v4_GUI&amp;ori/sim_files/udrf/needle_tool/right_needle_tool.stl" />
+            </geometry>
+        </collision>
+        <visual name="openarm_right_needle_tool_visual">
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+                <mesh filename="file:///home/adi99/Desktop/OpenArm_Project1/OpenArm_v4_GUI&amp;ori/sim_files/udrf/needle_tool/right_needle_tool.stl" />
+            </geometry>
+            <material name="openarm_right_needle_tool_material">
+                <color rgba="0.85 0.85 0.80 1.0" />
+            </material>
+        </visual>
+        <visual name="openarm_right_needle_tool_syringe_plunger">
+            <origin rpy="0 1.570796 0" xyz="0.016856 -0.093450 -0.000250" />
+            <geometry>
+                <cylinder radius="0.010000" length="0.102000" />
+            </geometry>
+            <material name="openarm_right_needle_tool_syringe_plunger_material">
+                <color rgba="0.95 0.95 0.95 0.6" />
+            </material>
+        </visual>
+        <visual name="openarm_right_needle_tool_needle">
+            <origin rpy="0 1.570796 0" xyz="-0.055001 -0.093450 -0.000250" />
+            <geometry>
+                <cylinder radius="0.000400" length="0.000100" />
+            </geometry>
+            <material name="openarm_right_needle_tool_needle_material">
+                <color rgba="0.6 0.6 0.65 1.0" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_right_needle_hub_joint" type="fixed">
+        <parent link="openarm_right_needle_tool" />
+        <child link="openarm_right_needle_hub" />
+        <origin rpy="0 0 0" xyz="-0.055001 -0.093450 -0.000250" />
+    </joint>
+    <link name="openarm_right_needle_hub">
+        <visual name="openarm_right_needle_hub_visual">
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+                <sphere radius="0.0010" />
+            </geometry>
+            <material name="openarm_right_needle_hub_material">
+                <color rgba="0.2 0.6 1 1" />
+            </material>
+        </visual>
+    </link>
+    <joint name="openarm_right_needle_tip_joint" type="fixed">
+        <parent link="openarm_right_needle_tool" />
+        <child link="openarm_right_needle_tip" />
+        <origin rpy="0 0 0" xyz="-0.055001 -0.093450 -0.000250" />
+    </joint>
+    <link name="openarm_right_needle_tip">
+        <visual name="openarm_right_needle_tip_visual">
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+                <sphere radius="0.0010" />
+            </geometry>
+            <material name="openarm_right_needle_tip_material">
+                <color rgba="1 0.2 0.2 1" />
+            </material>
+        </visual>
+    </link>
+</robot>

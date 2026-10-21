@@ -1,0 +1,216 @@
+# OpenArm configuration
+
+# ── file paths ────────────────────────────────────────────────────────────────
+# Relative paths are resolved from the OpenArm_v3/ project root; absolute
+# paths are used as-is.
+paths:
+  # kinematics, dynamics, sim limits. openarm_dual_needle.urdf = right arm with
+  # the load-cell needle tool (made by src/tools/make_needle_urdf.py; its TCP is
+  # the needle tip); openarm_dual.urdf = the original, grippers on both arms.
+  urdf: sim_files/udrf/openarm_dual_needle.urdf
+  sim_scenes:                                   # CoppeliaSim scenes (load manually)
+    org:      sim_files/dual_openarm_org.ttt
+    switched: sim_files/dual_openarm_switched.ttt
+  recordings: recordings                        # record / replay CSV folder
+  docs: docs
+  openarm_can: /usr/lib/python3/dist-packages   # system apt package location of openarm_can
+
+# ── CAN interfaces ────────────────────────────────────────────────────────────
+# Mapping confirmed via `openarm-can-diagnosis` — see docs/01_hardware_setup.md.
+can:
+  right: can0          # CH1 — right arm CAN channel
+  left:  can1          # CH2 — left arm CAN channel
+  fd: true             # CAN-FD enabled (true = 5 Mbps, false = classic CAN 1 Mbps)
+  bitrate:  1000000    # arbitration bitrate (bps)
+  dbitrate: 5000000    # CAN-FD data bitrate (bps)
+
+# ── motor IDs ─────────────────────────────────────────────────────────────────
+# send_ids: IDs the host sends commands TO (motor input)
+# recv_ids: IDs the host receives responses FROM (motor output)
+# Discovered via: openarm-can-diagnosis can0 -fd
+motors:
+  arm:
+    # Per joint, joint1..joint7. Must match the motors' own PMAX/VMAX/TMAX
+    # registers (check: `python3 comm/arm_can.py params --arm right`) --
+    # openarm_can encodes tau_ff and decodes torque/velocity with the declared
+    # type's ranges, so a wrong type silently scales them (a DM4340 declared as
+    # DM4310 applies 2.8x the commanded tau_ff).
+    types: [DM8009, DM8009, DM4340, DM4340, DM4310, DM4310, DM4310]
+    count: 7
+    send_ids: [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07]
+    recv_ids: [0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17]
+    names:
+      - joint1   # shoulder pan
+      - joint2   # shoulder lift
+      - joint3   # elbow roll
+      - joint4   # elbow pitch
+      - joint5   # wrist roll
+      - joint6   # wrist pitch
+      - joint7   # wrist twist
+  gripper:
+    type: DM4310
+    send_id: 0x08
+    recv_id: 0x18
+    name: gripper
+    # Per arm: false where the gripper motor is gone -- arm_can.py then never
+    # initialises, reads or commands motor 0x08 on that arm. The right arm's
+    # gripper was replaced by the needle tool (the CAD has no motor there).
+    # UNTESTED on the arm -- check `python3 comm/arm_can.py status` first.
+    enabled: {left: true, right: false}
+
+# ── control gains ─────────────────────────────────────────────────────────────
+# MIT torque range (tMax) per motor type: DM8009 54 Nm (j1-j2), DM4340 28 Nm
+# (j3-j4), DM4310 10 Nm (j5-j7, gripper). kp 0-500 Nm/rad, kd 0-5 Nm·s/rad on all.
+# kp/kd are per joint: joint1..joint7, gripper (8 values each).
+control:
+  #     j1    j2    j3    j4    j5    j6    j7    gripper
+  kp: [40.0, 40.0, 40.0, 40.0, 40.0, 40.0, 40.0, 40.0]   # position gain  (Nm/rad)
+  kd: [ 0.5,  0.5,  0.5,  0.5,  0.5,  0.5,  0.5,  0.5]   # velocity gain  (Nm·s/rad)
+  ctrl_hz: 100   # control loop rate (Hz)
+  # Gravity feedforward torque (tau_ff = tau_g(q) from dynamics.py), per joint
+  # joint1..joint7: 1 = add gravity compensation on that joint, 0 = off.
+  # Applies to the real arm in every mode, both sides. All zeros = disabled.
+  joint_tauG_enable: [1, 1, 1, 1, 1, 1, 1]
+
+
+# ── CoppeliaSim (ZMQ Remote API) ───────────────────────────────────────────────
+sim:
+  host: localhost
+  port: 23000
+  # openarm_*_finger_joint1/2 are independent prismatic joints (metres), no
+  # mimic constraint in the URDF -- both fingers are driven to the same
+  # value. Their range (lower/upper) is read from the URDF at paths.urdf.
+  # Sim joint limits (--limits sim) are also read from the URDF.
+
+#── joint limits (degrees) - RealArm ─────
+
+R_right_arm:
+  gripper:
+    open: -65  #deg
+    close: 0 #deg 
+
+  limits_deg:
+    joint1:  [-70,  80.0]
+    joint2:  [0,  90.0]
+    joint3:  [ -80.0,  80.0]
+    joint4:  [   0.0, 140.0]
+    joint5:  [ -90.0,  90.0]
+    joint6:  [ -45.0,  45.0]
+    joint7:  [ -85.0,  85.0]
+  
+R_left_arm:
+  gripper:
+    open: 0  #deg
+    close: 65 #deg 
+
+  limits_deg:
+    joint1:  [-80,  0]
+    joint2:  [-90,  0]
+    joint3:  [ -80.0,  80.0]
+    joint4:  [   0.0, 140.0]
+    joint5:  [ -90.0,  90.0]
+    joint6:  [ -45.0,  45.0]
+    joint7:  [ -85.0,  85.0]
+
+# ── needle tool (load cell + syringe, replaces the gripper) ────────────────────
+# docs/09_loadcell_force_feedback_plan.md, Phase 0.
+tool:
+  # Extra offset of the TCP, metres, in the TCP frame (-X = along the tool),
+  # on top of the URDF's TCP. With openarm_dual_needle.urdf the TCP already is
+  # the needle tip -- set the needle length there (tools/make_needle_urdf.py
+  # --needle-mm), and keep this for small corrections, e.g. [-0.002, 0, 0]
+  # moves the tip 2 mm further down the needle.
+  tip_offset_m: [0.0, 0.0, 0.0]
+
+# ── load cell (HX711 on a XIAO ESP32S3, USB serial) ───────────────────────────
+# Driver: src/comm/loadcell.py (CLI: ports / monitor / noise / calibrate).
+loadcell:
+  port: auto                 # or /dev/ttyACM0; auto = Espressif USB device, else first ttyACM
+  baud: 115200
+  sign: 1                    # +1 when pushing the needle in reads positive (it does on the rig)
+  scale_counts_per_n: null   # from `loadcell.py calibrate`; null = uncalibrated, work in counts
+  # FakeLoadCell phantoms (--loadcell fake), placed under plunger point 3:
+  # surface_below_mm under it; bones relative to the surface point straight
+  # below point 3 -- x, y in robot_base mm, z = mm BELOW the surface. Forces in
+  # raw counts: k_tissue per mm of depth going in, -k_friction per mm coming
+  # out, k_bone per mm pushed into bone, noise sd, offset = untouched reading.
+  fake_phantom: sphere       # default for --fake-phantom
+  fake_phantoms:
+    sphere:                  # straight down hits it at 21 mm; a ~15 deg tilt misses
+      surface_below_mm: 10
+      bones: [{sphere: {center_mm: [0, 0, 25], radius_mm: 4}}]
+    slab:                    # wide bone shelf off to +x: tilting toward -x misses it
+      surface_below_mm: 10
+      bones: [{box: {lo_mm: [-6, -12, 22], hi_mm: [20, 12, 28]}}]
+    none:                    # silicone only
+      surface_below_mm: 10
+      bones: []
+
+# ── force guard (plunger point 4 with --guard log|on) ─────────────────────────
+# Plan §4.1. Values in `units`: counts (tared, + = pushing in) until the load
+# cell is calibrated, N after (set units: N and convert every force below).
+# The bone-rule numbers (f_bone_min, k_bone, f_soft) are PROVISIONAL -- they
+# work on the fake phantom; set them from real force-vs-depth data (Phase 3-4).
+guard:
+  units: counts
+  f_contact: 100000          # ~5 sd of the worst baseline noise seen (25k)
+  contact_samples: 3
+  f_soft: 2500000            # insert slows linearly from f_contact up to here
+  s_min: 0.2                 # ...down to this fraction of the insertion speed
+  f_bone_min: 1000000
+  k_bone: 1000000            # counts per mm of measured travel
+  stiff_window_mm: 0.5
+  stall_ratio: 0.25          # measured advance < 25 % of commanded (compliant arm stalling)
+  stall_window_s: 0.3
+  t_persist_s: 0.12
+  f_abort: 4000000           # < 70 % of the 4.35 M where the bracket broke
+  f_pull_abort: 1000000
+  lag_max_mm: 20
+  stale_s: 0.1
+  max_dropped: 5
+  release_s: 0.2
+  f_out: 200000              # "needle out" = |force| under this for out_hold_s (the zero
+                             # shifted ~+95k after hard presses; silicone withdrawal reads -1.6..-2.3 M)
+  out_hold_s: 0.3
+  out_timeout_s: 5.0
+  approach_speed_mm_s: null  # null = plunger --speed
+  insert_speed_mm_s: 1.0
+  retract_speed_mm_s: 2.0
+  tare_s: 0.5                # still time before each insertion, tared on its median
+  tare_noise_max: 40000      # refuse to start if the tare's sd is above this
+  tare_jump_max: 300000      # ...or it moved this far from the previous tare (needle touching?)
+
+# ── bone-avoidance search (plunger point 4 --search) ──────────────────────────
+# Plan §4.3: retract fully, re-aim through the same entry point, try again.
+search:
+  tilt_steps_deg: [5, 10, 15, 20]
+  rot_step_deg: 45
+  max_tilt_deg: 20
+  max_attempts: 6
+  h_safe_mm: 15              # tip height above the entry point while re-aiming
+  h_safe_max_mm: 45          # raised in 10 mm steps up to this if the transit dips
+  h_min_mm: 5                # the re-aim move must keep the tip this far above the surface
+  entry_tol_mm: 3.0          # contact this far from the entry point -> "block moved?"
+  transit_speed_mm_s: 10.0
+
+# ── occupancy map (plan §4.4) ─────────────────────────────────────────────────
+map:
+  dir: maps                  # under paths.recordings
+  name: phantom              # default --map
+  hit_radius_mm: 3.0         # each hit is a sphere this big; set from the hit spread
+  line_margin_mm: 1.0        # extra clearance when choosing a direction
+  map_stop_mm: 2.0           # stop this far before entering a hit sphere
+
+# ── axis hold (plunger point 4 / insertion, real arm) ─────────────────────────
+# The joints are springs (kp ~40 Nm/rad): under the insertion load the needle
+# tilted 2-4 deg and drifted 16-27 mm off its line (2026-10-13), although the
+# IK plan held it exactly straight. This outer loop measures the needle's tilt
+# and sideways drift every tick and corrects the joint commands until they're
+# gone -- motion ALONG the needle is left soft (the load-cell guard needs it).
+# motion/axis_hold.py. --no-axis-hold / the GUI checkbox switch it off per run.
+axis_hold:
+  enabled: true
+  ki_per_s: 2.0             # how fast an error is taken out (2 = ~0.5 s)
+  max_correction_deg: 8.0   # largest correction on any joint
+  max_rate_deg_s: 5.0       # fastest the correction may change
+  damping: 0.02

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# OpenArm Control -- the openarm> shell / one-shot commands (main.py). Installed by
+# the openarm-control .deb as /usr/bin/openarm. Runs in the current directory, so
+# a relative path given to a command is relative to where you are.
+APP=/opt/openarm-control
+unset PYTHONPATH
+export OPENARM_DATA_DIR="${OPENARM_DATA_DIR:-$HOME/OpenArm}"
+if [ ! -x "$APP/venv/bin/python" ]; then
+    echo "OpenArm Control's Python environment is missing -- run: sudo dpkg-reconfigure openarm-control" >&2
+    exit 1
+fi
+exec "$APP/venv/bin/python" "$APP/src/main.py" "$@"

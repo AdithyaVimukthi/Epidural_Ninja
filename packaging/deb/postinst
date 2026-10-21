@@ -1,0 +1,51 @@
+#!/bin/bash
+# openarm-control postinst: make the app's Python environment, /opt/openarm-control/venv.
+# The libraries (~400 MB) come from PyPI, or from packaging/wheels in an offline
+# .deb. Kept across upgrades; made again if the system Python changed. If this
+# fails (no internet), fix that and run: sudo dpkg --configure -a
+set -e
+APP=/opt/openarm-control
+VENV="$APP/venv"
+REQ="$APP/packaging"
+
+[ "$1" = "configure" ] || exit 0
+unset PYTHONPATH PIP_REQUIRE_VIRTUALENV
+export PIP_DISABLE_PIP_VERSION_CHECK=1 PIP_NO_CACHE_DIR=1 PIP_ROOT_USER_ACTION=ignore
+
+sys_ver="$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')"
+venv_ver="$("$VENV/bin/python" -c 'import sys; print("%d.%d" % sys.version_info[:2])' 2>/dev/null || true)"
+if [ "$venv_ver" != "$sys_ver" ]; then
+    echo "OpenArm Control: making the Python $sys_ver environment in $VENV"
+    rm -rf "$VENV"
+    python3 -m venv "$VENV"
+fi
+"$VENV/bin/python" -m pip install --quiet --upgrade pip || true
+
+pip_src=()
+if [ -d "$REQ/wheels" ]; then
+    pip_src=(--no-index --find-links "$REQ/wheels")
+    echo "OpenArm Control: installing the Python libraries from the bundled wheels"
+else
+    echo "OpenArm Control: installing the Python libraries (~400 MB download the first time)"
+fi
+if ! "$VENV/bin/python" -m pip install --quiet "${pip_src[@]}" -r "$REQ/requirements.txt"; then
+    echo "OpenArm Control: the pinned versions didn't install -- trying compatible ones"
+    "$VENV/bin/python" -m pip install --quiet "${pip_src[@]}" -r "$REQ/requirements-loose.txt"
+fi
+
+"$VENV/bin/python" - "$APP/src" <<'PY'
+import sys; sys.path.insert(0, sys.argv[1]); import _bootstrap  # noqa
+import numpy, scipy, matplotlib, PySide6, roboticstoolbox, spatialmath, pinocchio, yaml, serial, zmq  # noqa
+import config, kinematics  # noqa
+kinematics.ArmKinematics("right")
+print("OpenArm Control: libraries and arm model load")
+PY
+# Users can't write under /opt, so compile the bytecode now.
+"$VENV/bin/python" -m compileall -q "$APP/src" >/dev/null || true
+
+if ! python3 -c 'import sys; sys.path.append("/usr/lib/python3/dist-packages"); import openarm_can' 2>/dev/null; then
+    echo "OpenArm Control: simulation is ready. For the real arm also install python3-openarm-can:"
+    echo "  sudo add-apt-repository ppa:openarm/main && sudo apt install python3-openarm-can can-utils"
+fi
+echo "OpenArm Control: the load cell needs your user in the dialout group: sudo usermod -aG dialout \$USER (then log out and in)"
+exit 0

@@ -1,0 +1,83 @@
+# OpenArm user configuration -- written by the GUI when it closes.
+# Laid over config.yaml (the defaults, never edited) at start-up, for the GUI
+# and the CLI. Delete this file to go back to config.yaml.
+control:
+  kp: [40.0, 40.0, 40.0, 40.0, 40.0, 40.0, 40.0, 40.0]
+  kd: [0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.5]
+  joint_tauG_enable: [1, 1, 1, 1, 1, 1, 1]
+R_right_arm:
+  gripper: {open: -65.0, close: 0.0}
+  limits_deg:
+    joint1: [-70.0, 80.0]
+    joint2: [0.0, 90.0]
+    joint3: [-90.0, 90.0]
+    joint4: [0.0, 140.0]
+    joint5: [-90.0, 90.0]
+    joint6: [-45.0, 45.0]
+    joint7: [-85.0, 85.0]
+R_left_arm:
+  gripper: {open: 0.0, close: 65.0}
+  limits_deg:
+    joint1: [-80.0, 0.0]
+    joint2: [-90.0, 0.0]
+    joint3: [-80.0, 80.0]
+    joint4: [0.0, 140.0]
+    joint5: [-90.0, 90.0]
+    joint6: [-45.0, 45.0]
+    joint7: [-85.0, 85.0]
+sim: {host: localhost, port: 23000}
+gui:
+  ui:
+    geometry: {base64: AdnQywADAAAAAABGAAAAGwAAB38AAAQ3AAAAfwAAALUAAAczAAAENgAAAAACAAAAB4AAAABGAAAAQAAAB38AAAQ3}
+    state: {base64: AAAA/wAAAAD9AAAAAwAAAAAAAAGNAAAD0fwCAAAAAfsAAAAgAGMAbwBuAG4AZQBjAHQAaQBvAG4AcwBfAGQAbwBjAGsBAAAAJwAAA9EAAABdAP///wAAAAEAAAIIAAAD0fwCAAAAAfsAAAASAGwAaQB2AGUAXwBkAG8AYwBrAQAAACcAAAPRAAABzgD///8AAAADAAADmQAAAK38AQAAAAH7AAAAGABjAG8AbgBzAG8AbABlAF8AZABvAGMAawEAAAGTAAADmQAAARIA////AAADmQAAAx4AAAAEAAAABAAAAAEAAAAC/AAAAAEAAAACAAAAAQAAABwAdABhAHIAZwBlAHQAXwB0AG8AbwBsAGIAYQByAQAAAAD/////AAAAAAAAAAA=}
+    arm: right
+    backend: real
+    tab: 0
+  real: {poll: 'true'}
+  sim: {live: 'true', host: localhost, port: 23000, rate: 10.0}
+  safety: {confirm_real: 'true'}
+  tabs:
+    Joint:
+      duration: 2.0
+      gripper: leave
+      jog_duration: 0.3
+      show_ghost: true
+      pose_combo: ''
+      targets:
+        left: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        right: [50.4, 7.6, 0.0, 49.4, 0.0, -29.5, -50.7]
+    Cartesian: {orient: false, limits: real, duration: 2.0, step: 10.0}
+    Line: {tilt: 0.0, rot: 0.0, depth_spin: 0.06, split: 0.6, orient: path, limits: real, rate_auto: true,
+      rate: 100.0, plan_step: 0.002}
+    Plunger:
+      then_retract: false
+      lc_port: auto
+      force_window: 50.0
+      joint_speed: 10.0
+      limits: real
+      depth_spin: 0.08
+      speed: 0.002
+      name: ''
+      plan_step: 0.003
+      axis_hold: false
+      guard: 'off'
+      lc_source: auto
+      phantom: sphere
+      insert_speed: 0.001
+      on_bone: retract
+      on_success: hold
+      search: true
+      max_attempts: 2
+      max_tilt: 20.0
+      map_name: phantom
+      targets:
+        left: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        right: [0.0, 0.0, 90.0, 90.0, 0.0, 0.0, -85.0]
+      xyz: [0.2, -0.08, 0.235]
+      split: [408, 68]
+      plot_tab: 0
+    Imitate: {rate: 20.0, duration: 0.0, hold: true}
+    Record: {name: '', rate: 50.0, duration: 0.0, countdown: 3.0, damping: 0.0, no_trim: false, mirror: false}
+    Replay: {arm: recorded arms, speed: 1.0, approach: 3.0, max_speed: 90.0, rate_auto: true, rate: 100.0}
+    Scope: {source: real, side: right, quantity: position (deg), window_s: 10.0, pause: false}
+    Settings: {}

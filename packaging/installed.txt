@@ -1,0 +1,8 @@
+mode=in-place
+app=/home/adi99/Desktop/OpenArm_Project1/OpenArm_v4_GUI&ori
+venv=/home/adi99/Desktop/OpenArm_Project1/.venv
+version=4.0.0
+date=2026-10-12T22:36:53+10:00
+/home/adi99/.local/bin/openarm-gui
+/home/adi99/.local/bin/openarm
+/home/adi99/.local/share/applications/openarm-control.desktop
